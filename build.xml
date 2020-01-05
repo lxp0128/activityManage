@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="personOMS" default="compile" basedir=".">
+	<!-- 注意需要定义环境变量 -->
+	<property environment="env" />
+    <property name="tomcat.lib" value="/home/ubuntu/tomcat-8.5.33/_jenkins-apache-tomcat-8.5.33/lib" />
+
+    <property name="src.dir" value="src" />
+    <property name="dest.dir" value="WebRoot/WEB-INF/classes" />
+
+    <target name="init">
+        <mkdir dir="${dest.dir}" />
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${dest.dir}" encoding="utf-8" fork="true" debug="true" debuglevel="lines,vars,source" executable="/home/ubuntu/jdk/jdk1.8.0_45/bin/javac">
+            <classpath>
+                <fileset dir="${env.TOMCAT_LIB}">
+                    <include name="*.jar" />
+                </fileset>
+                <fileset dir="WebRoot/WEB-INF/lib">
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+    <target name="clean">
+        <delete dir="${dest.dir}" />
+    </target>
+</project>
